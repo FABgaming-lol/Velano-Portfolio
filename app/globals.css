@@ -2,53 +2,121 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Smooth theme + text/background animation */
+/* Global smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Page fade-in */
 body {
   transition:
     background-color 0.35s ease,
     color 0.35s ease;
 }
 
-/* Testimonials transition */
+/* Scroll progress bar glow */
+#scrollProgress {
+  transition: width 0.1s linear;
+  box-shadow: 0 0 10px currentColor;
+}
+
+/* Section reveal base */
+.reveal-section {
+  opacity: 0;
+  transform: translateY(32px);
+  transition:
+    opacity 0.9s ease,
+    transform 0.9s ease;
+  will-change: opacity, transform;
+}
+
+.reveal-section.visible-section {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Staggered project card reveal */
+.project-card {
+  opacity: 0;
+  transform: translateY(26px);
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s ease;
+}
+
+.project-card.project-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Testimonials fade */
 .testimonial {
   opacity: 0;
-  transform: translateY(10px);
+  transform: translateY(8px);
   position: absolute;
   inset: 0;
   padding: 22px 20px 26px;
-  transition: opacity 0.35s ease, transform 0.35s ease;
+  transition:
+    opacity 0.35s ease,
+    transform 0.35s ease;
 }
+
 .testimonial.active {
   opacity: 1;
   transform: translateY(0);
   position: relative;
 }
 
-/* Project reveal */
-.project-card {
-  opacity: 0;
-  transform: translateY(25px);
-  transition: opacity 0.45s ease, transform 0.45s ease;
-}
-.project-card.project-visible {
-  opacity: 1;
-  transform: translateY(0);
+/* Magnetic buttons */
+.btn-magnetic {
+  transition:
+    transform 0.18s cubic-bezier(0.16, 1, 0.3, 1),
+    background-color 0.25s,
+    color 0.25s,
+    border-color 0.25s;
+  will-change: transform;
 }
 
-/* Initial section reveal */
-.reveal-about,
-.reveal-services,
-.reveal-stack,
-.reveal-panel,
-.reveal-testimonials,
-.reveal-contact {
-  opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.9s ease, transform 0.9s ease;
+button:active {
+  transform: scale(0.97);
 }
-.visible-section {
-  opacity: 1;
-  transform: translateY(0);
+
+/* 3D hero wrapper */
+.hero-3d-shell {
+  perspective: 1400px;
+}
+
+.hero-3d-inner {
+  transform-style: preserve-3d;
+  transition:
+    transform 0.16s ease-out,
+    box-shadow 0.25s ease-out,
+    background 0.25s ease-out;
+}
+
+/* Slight 3D hover on cards */
+.card-3d {
+  transition:
+    transform 0.2s ease-out,
+    box-shadow 0.24s ease-out,
+    border-color 0.24s ease-out,
+    background-color 0.24s ease-out;
+  transform-origin: center center;
+  will-change: transform, box-shadow;
+}
+
+.card-3d:hover {
+  transform: translateY(-6px) rotateX(4deg) rotateY(-3deg);
+  box-shadow:
+    0 22px 45px rgba(0, 0, 0, 0.26),
+    0 0 0 1px rgba(255, 255, 255, 0.02);
+}
+
+/* Active nav link */
+.nav-link.active-link {
+  transform: translateY(-2px);
+  background: rgba(0, 0, 0, 0.04);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
 }
 
 /* Success checkmark animation */
@@ -57,41 +125,15 @@ body {
   stroke-dashoffset: 30;
   animation: checkDraw 0.4s ease-out forwards;
 }
+
 @keyframes checkDraw {
   to {
     stroke-dashoffset: 0;
   }
 }
 
-/* Magnetic hover upgrade */
-.btn-magnetic {
-  transition:
-    transform 0.18s cubic-bezier(0.16, 1, 0.3, 1),
-    background-color 0.25s,
-    color 0.25s,
-    border 0.25s;
-}
-
-/* Click micro interaction */
-button:active {
-  transform: scale(0.97);
-}
-
-/* Active nav visual */
-.nav-link.active-link {
-  color: var(--text);
-  transform: translateY(-2px);
-  background: rgba(255,255,255,0.06);
-  box-shadow: 0 2px 10px rgba(0,0,0,0.16);
-}
-
-/* Scroll glow effect */
-#scrollProgress {
-  transition: width 0.1s linear;
-  box-shadow: 0 0 10px currentColor;
-}
-
-/* HTML body structure */
-html, body {
+/* Layout */
+html,
+body {
   height: 100%;
 }
