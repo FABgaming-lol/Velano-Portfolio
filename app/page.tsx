@@ -1,54 +1,11 @@
 "use client";
 
-import { motion, useScroll, useMotionValue } from "framer-motion";
-import { useRef, useEffect, useState } from "react";
+import { motion, useScroll } from "framer-motion";
 
-/* ================= MOTION ================= */
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 32 },
-  visible: (i = 1) => ({
-    opacity: 1,
-    y: 0,
-    transition: {
-      delay: 0.1 * i,
-      duration: 0.7,
-      ease: "easeOut",
-    },
-  }),
+const fade = {
+  hidden: { opacity: 0, y: 40 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } },
 };
-
-/* ================= COUNT UP ================= */
-
-function CountUp({ value }: { value: number }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [display, setDisplay] = useState(0);
-  const motionValue = useMotionValue(0);
-
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end center"],
-  });
-
-  useEffect(() => {
-    const unsubScroll = scrollYProgress.on("change", (latest) => {
-      motionValue.set(Math.floor(latest * value));
-    });
-
-    const unsubMotion = motionValue.on("change", (latest) => {
-      setDisplay(Math.min(latest, value));
-    });
-
-    return () => {
-      unsubScroll();
-      unsubMotion();
-    };
-  }, [motionValue, scrollYProgress, value]);
-
-  return <div ref={ref}>{display}</div>;
-}
-
-/* ================= PAGE ================= */
 
 export default function Page() {
   const { scrollYProgress } = useScroll();
@@ -56,170 +13,112 @@ export default function Page() {
   return (
     <main className="bg-main text-white">
 
-      {/* SCROLL PROGRESS */}
+      {/* Scroll progress */}
       <motion.div
         style={{ scaleX: scrollYProgress }}
         className="fixed top-0 left-0 right-0 h-[2px] bg-white origin-left z-50"
       />
 
-      {/* NAVIGATION */}
-      <header className="fixed top-0 left-0 right-0 z-40 backdrop-blur bg-black/50 border-b border-white/10">
-        <nav className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-          <span className="text-sm tracking-widest font-semibold">
-            VELANO
-          </span>
-
-          <div className="hidden md:flex gap-6 text-sm text-gray-400">
-            <a href="#systems" className="hover:text-white">Systems</a>
-            <a href="#process" className="hover:text-white">Process</a>
-            <a href="#pricing" className="hover:text-white">Pricing</a>
-            <a href="#proof" className="hover:text-white">Proof</a>
-            <a href="#contact" className="text-white">Contact</a>
-          </div>
-        </nav>
-      </header>
-
       {/* HERO */}
-      <section className="min-h-screen flex items-center px-6 pt-16 text-center">
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={fadeUp}
-          className="max-w-5xl mx-auto"
-        >
-          <span className="uppercase text-xs tracking-[0.35em] text-gray-400">
-            An AVOLIRO Division
-          </span>
-
-          <h1 className="mt-6 text-5xl md:text-6xl font-extrabold leading-tight">
-            Digital systems built
-            <br />for scale<span className="accent">.</span>
+      <section className="min-h-screen flex items-center justify-center px-6 text-center">
+        <motion.div initial="hidden" animate="visible" variants={fade}>
+          <h1 className="text-5xl md:text-6xl font-extrabold leading-tight">
+            Digital systems,
+            <br />
+            engineered for scale<span className="accent">.</span>
           </h1>
 
-          <p className="mt-8 text-gray-400 text-lg max-w-2xl mx-auto">
-            Velano engineers high-performance digital systems for brands
-            that care about longevity, clarity, and leverage.
+          <p className="mt-8 text-gray-400 max-w-2xl mx-auto text-lg">
+            Velano builds high-performance digital systems for brands
+            that think long-term.
           </p>
 
-          <div className="mt-12">
-            <a
-              href="#contact"
-              className="inline-block px-10 py-4 bg-white text-black font-semibold rounded-lg"
-            >
-              Start a conversation
-            </a>
-          </div>
+          <a
+            href="#contact"
+            className="inline-block mt-12 px-12 py-4 bg-white text-black font-semibold rounded-lg hover:-translate-y-1 transition"
+          >
+            Start a conversation
+          </a>
         </motion.div>
       </section>
 
       {/* SYSTEMS */}
       <section id="systems" className="px-6 py-28">
-        <div className="max-w-6xl mx-auto text-center">
-          <h2 className="text-3xl font-bold mb-16">What We Engineer</h2>
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fade} className="max-w-6xl mx-auto">
+          <h2 className="text-3xl font-bold text-center mb-16">What We Build</h2>
 
-          <div className="grid md:grid-cols-2 gap-8">
-            {systems.map((s, i) => (
-              <motion.div
-                key={s.title}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={fadeUp}
-                custom={i + 1}
-                className="surface p-8 rounded-xl border border-white/10 depth"
-              >
-                <h3 className="text-xl font-semibold mb-3">{s.title}</h3>
-                <p className="text-gray-400">{s.desc}</p>
-              </motion.div>
+          <div className="grid md:grid-cols-2 gap-10">
+            {[
+              ["Interface Architecture", "Clear UI systems aligned with brand intent."],
+              ["Front-End Engineering", "Performance-first, scalable codebases."],
+              ["AI-Accelerated Delivery", "Faster execution without quality loss."],
+              ["Long-Term Systems", "Built to evolve, not be replaced."],
+            ].map(([title, desc]) => (
+              <div key={title} className="surface p-8 rounded-xl depth">
+                <h3 className="text-xl font-semibold mb-3">{title}</h3>
+                <p className="text-gray-400">{desc}</p>
+              </div>
             ))}
           </div>
-        </div>
+        </motion.div>
+      </section>
+
+      {/* PROCESS */}
+      <section id="process" className="px-6 py-28">
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fade} className="max-w-5xl mx-auto">
+          <h2 className="text-3xl font-bold text-center mb-20">How We Work</h2>
+
+          <div className="space-y-14">
+            {[
+              "Audit & clarity",
+              "System architecture",
+              "Engineering & iteration",
+              "Launch, measure, refine",
+            ].map((step, i) => (
+              <div key={step} className="relative pl-8">
+                <div className="absolute left-0 top-2 w-3 h-3 rounded-full bg-white" />
+                <p className="text-lg text-gray-300">
+                  <span className="text-white font-semibold">{i + 1}.</span> {step}
+                </p>
+              </div>
+            ))}
+          </div>
+        </motion.div>
       </section>
 
       {/* PRICING PHILOSOPHY */}
       <section id="pricing" className="px-6 py-28">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl font-bold mb-10">Pricing Philosophy</h2>
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fade} className="max-w-4xl mx-auto text-center surface rounded-2xl p-14 depth">
+          <h2 className="text-3xl font-bold mb-6">Pricing Philosophy</h2>
 
           <p className="text-gray-400 text-lg leading-relaxed">
-            Velano does not sell fixed packages or templates.
+            Velano does not sell fixed packages or hourly work.
             <br /><br />
-            Pricing is based on system complexity, scope,
-            and long-term value — not hours or pages.
-            <br /><br />
-            If you’re looking for the cheapest option,
-            Velano is not a fit.
+            Pricing is based on:
             <br />
-            If you’re looking for clarity, structure,
-            and leverage — we should talk.
+            system complexity, scope, and long-term impact.
+            <br /><br />
+            This ensures alignment — not rushed delivery.
           </p>
-        </div>
-      </section>
-
-      {/* METRICS */}
-      <section className="px-6 py-28">
-        <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-10 text-center">
-          <Metric label="Systems shipped" value={32} />
-          <Metric label="Avg performance gain (%)" value={68} />
-          <Metric label="Delivery speed increase (%)" value={54} />
-        </div>
+        </motion.div>
       </section>
 
       {/* CTA */}
       <section id="contact" className="px-6 py-32">
-        <div className="max-w-4xl mx-auto surface rounded-2xl p-14 text-center depth">
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fade} className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl font-bold mb-6">
-            Let’s Build Something Serious
+            Ready to build something serious?
           </h2>
 
-          <p className="text-gray-400 mb-10">
-            Reach out if you’re building for the long term.
-          </p>
-
           <a
-            href="mailto:hello@velano.dev?subject=Project Inquiry"
-            className="inline-block px-14 py-4 rounded-lg bg-white text-black font-semibold"
+            href="mailto:hello@velano.dev"
+            className="inline-block mt-6 px-14 py-4 bg-white text-black font-semibold rounded-lg hover:-translate-y-1 transition"
           >
-            Contact Velano
+            Engage Velano
           </a>
-        </div>
+        </motion.div>
       </section>
 
     </main>
   );
 }
-
-/* ================= COMPONENTS ================= */
-
-function Metric({ label, value }: { label: string; value: number }) {
-  return (
-    <div className="surface rounded-xl p-10 depth">
-      <div className="text-5xl font-extrabold mb-3">
-        <CountUp value={value} />
-        <span className="accent">+</span>
-      </div>
-      <p className="text-gray-400">{label}</p>
-    </div>
-  );
-}
-
-/* ================= DATA ================= */
-
-const systems = [
-  {
-    title: "Interface Architecture",
-    desc: "Clear, scalable UI systems built for real products.",
-  },
-  {
-    title: "Front-End Engineering",
-    desc: "Performance-first engineering with long-term maintainability.",
-  },
-  {
-    title: "AI-Accelerated Delivery",
-    desc: "Speed without sacrificing correctness or structure.",
-  },
-  {
-    title: "Scalable Codebases",
-    desc: "Systems designed to evolve, not collapse.",
-  },
-];
