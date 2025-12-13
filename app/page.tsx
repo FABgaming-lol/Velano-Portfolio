@@ -1,9 +1,9 @@
 export default function Page() {
   return (
-    <main className="min-h-screen">
+    <main className="bg-black text-white">
 
-      {/* HERO */}
-      <section className="px-6 py-32">
+      {/* HERO — FULL VIEWPORT */}
+      <section className="min-h-screen flex items-center px-6">
         <div className="max-w-6xl mx-auto text-center">
           <h1 className="text-5xl md:text-6xl font-extrabold leading-tight">
             Digital systems,
@@ -21,7 +21,7 @@ export default function Page() {
       <Divider />
 
       {/* WHY */}
-      <section className="px-6 py-28">
+      <section className="px-6 py-20">
         <div className="max-w-4xl mx-auto text-center">
           <p className="text-gray-400 text-lg leading-relaxed">
             Most digital products fail because they are fragmented —
@@ -37,25 +37,25 @@ export default function Page() {
       <Divider />
 
       {/* SYSTEMS */}
-      <section className="px-6 py-28">
+      <section className="px-6 py-20">
         <div className="max-w-5xl mx-auto text-center">
-          <h2 className="text-3xl font-bold mb-12">
+          <h2 className="text-3xl font-bold mb-10">
             What Velano Builds
           </h2>
 
-          <div className="grid gap-6 text-gray-400 text-lg">
-            <p>• Brand-driven interface architecture</p>
-            <p>• Performance-first front-end systems</p>
-            <p>• AI-accelerated engineering workflows</p>
-            <p>• Clean, maintainable, scalable codebases</p>
-          </div>
+          <ul className="space-y-4 text-gray-400 text-lg">
+            <li>Brand-driven interface architecture</li>
+            <li>Performance-first front-end systems</li>
+            <li>AI-accelerated engineering workflows</li>
+            <li>Clean, maintainable, scalable codebases</li>
+          </ul>
         </div>
       </section>
 
       <Divider />
 
       {/* FILTER */}
-      <section className="px-6 py-28">
+      <section className="px-6 py-20">
         <div className="max-w-4xl mx-auto text-center">
           <p className="text-gray-400 text-lg">
             Velano is not for rushed timelines, templates,
@@ -70,7 +70,7 @@ export default function Page() {
       <Divider />
 
       {/* CTA */}
-      <section className="px-6 py-32">
+      <section className="px-6 py-24">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl font-bold mb-8">
             Engage Velano
