@@ -1,25 +1,22 @@
 "use client";
 
-import {
-  motion,
-  useScroll,
-  useMotionValue,
-  useReducedMotion,
-} from "framer-motion";
+import { motion, useScroll, useMotionValue } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
 
 /* ================= MOTION SYSTEM ================= */
 
 const section = {
-  hidden: { opacity: 0 },
+  hidden: {},
   visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.12 },
+    transition: {
+      staggerChildren: 0.12,
+      delayChildren: 0.1,
+    },
   },
 };
 
 const item = {
-  hidden: { opacity: 0, y: 32 },
+  hidden: { opacity: 0, y: 28 },
   visible: {
     opacity: 1,
     y: 0,
@@ -33,7 +30,6 @@ function CountUp({ value }: { value: number }) {
   const ref = useRef<HTMLDivElement>(null);
   const [display, setDisplay] = useState(0);
   const motionValue = useMotionValue(0);
-  const prefersReduced = useReducedMotion();
 
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -41,24 +37,19 @@ function CountUp({ value }: { value: number }) {
   });
 
   useEffect(() => {
-    if (prefersReduced) {
-      setDisplay(value);
-      return;
-    }
-
-    const a = scrollYProgress.on("change", (latest) => {
+    const unsubScroll = scrollYProgress.on("change", (latest) => {
       motionValue.set(Math.floor(latest * value));
     });
 
-    const b = motionValue.on("change", (latest) => {
+    const unsubMotion = motionValue.on("change", (latest) => {
       setDisplay(Math.min(latest, value));
     });
 
     return () => {
-      a();
-      b();
+      unsubScroll();
+      unsubMotion();
     };
-  }, [motionValue, scrollYProgress, value, prefersReduced]);
+  }, [motionValue, scrollYProgress, value]);
 
   return <div ref={ref}>{display}</div>;
 }
@@ -82,24 +73,24 @@ export default function Page() {
         <div className="absolute inset-0 hero-bg opacity-40" />
 
         <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={section}
+          initial={{ opacity: 0, y: 36 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
           className="relative max-w-6xl mx-auto text-center"
         >
-          <motion.span variants={item} className="uppercase text-xs tracking-[0.35em] text-gray-400">
+          <span className="uppercase text-xs tracking-[0.35em] text-gray-400">
             AVOLIRO / VELANO
-          </motion.span>
+          </span>
 
-          <motion.h1 variants={item} className="mt-6 text-5xl md:text-6xl font-extrabold leading-tight">
+          <h1 className="mt-6 text-5xl md:text-6xl font-extrabold leading-tight">
             Digital systems,
             <br />
             engineered for scale<span className="accent">.</span>
-          </motion.h1>
+          </h1>
 
-          <motion.p variants={item} className="mt-8 text-gray-400 text-lg max-w-2xl mx-auto">
+          <p className="mt-8 text-gray-400 text-lg max-w-2xl mx-auto">
             Velano engineers scalable digital systems for brands that operate seriously.
-          </motion.p>
+          </p>
         </motion.div>
       </section>
 
@@ -107,62 +98,64 @@ export default function Page() {
 
       {/* METRICS */}
       <motion.section
-        className="px-6 py-28"
+        variants={section}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
-        variants={section}
+        className="px-6 py-28"
       >
         <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-10 text-center">
-          <Metric label="Systems shipped" value={32} />
-          <Metric label="Performance gain (%)" value={68} />
-          <Metric label="Delivery speed increase (%)" value={54} />
+          {metrics.map((m) => (
+            <motion.div key={m.label} variants={item}>
+              <Metric {...m} />
+            </motion.div>
+          ))}
         </div>
       </motion.section>
 
       <Divider />
 
       {/* TIMELINE */}
-      <section className="px-6 py-28">
-        <div className="max-w-5xl mx-auto relative">
-          <motion.div
-            className="absolute left-2 top-0 w-px bg-white/20"
-            style={{ scaleY: scrollYProgress, originY: 0 }}
-          />
+      <motion.section
+        variants={section}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        className="px-6 py-28"
+      >
+        <div className="max-w-5xl mx-auto">
+          <h2 className="text-3xl font-bold text-center mb-20">
+            How Velano Operates
+          </h2>
 
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={section}
-            className="space-y-16 pl-10"
-          >
+          <div className="space-y-16">
             {timeline.map((t) => (
-              <motion.div key={t.title} variants={item}>
+              <motion.div key={t.title} variants={item} className="relative pl-10">
+                <div className="absolute left-0 top-2 w-3 h-3 rounded-full bg-white" />
                 <h3 className="text-xl font-semibold mb-3">{t.title}</h3>
                 <p className="text-gray-400">{t.desc}</p>
               </motion.div>
             ))}
-          </motion.div>
+          </div>
         </div>
-      </section>
+      </motion.section>
 
       <Divider />
 
       {/* CASES */}
       <motion.section
-        className="px-6 py-28"
+        variants={section}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
-        variants={section}
+        className="px-6 py-28"
       >
         <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-8">
           {cases.map((c) => (
             <motion.div
               key={c.title}
               variants={item}
-              className="surface rounded-xl p-8 border border-white/10 depth card-physics"
+              className="surface rounded-xl p-8 border border-white/10 depth"
             >
               <span className="text-xs uppercase tracking-widest text-gray-500">
                 {c.type}
@@ -178,31 +171,36 @@ export default function Page() {
 
       {/* CTA */}
       <motion.section
-        className="px-6 py-32"
+        variants={section}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
-        variants={section}
+        className="px-6 py-32"
       >
-        <motion.div variants={item} className="max-w-4xl mx-auto surface rounded-2xl p-14 text-center depth">
-          <h2 className="text-3xl font-bold mb-6">Engage Velano</h2>
-          <p className="text-gray-400 mb-10">
+        <div className="max-w-4xl mx-auto surface rounded-2xl p-14 text-center depth">
+          <motion.h2 variants={item} className="text-3xl font-bold mb-6">
+            Engage Velano
+          </motion.h2>
+
+          <motion.p variants={item} className="text-gray-400 mb-10">
             This is for teams that build for the long term.
-          </p>
-          <a
+          </motion.p>
+
+          <motion.a
+            variants={item}
             href="mailto:hello@velano.dev?subject=Project Inquiry"
             className="inline-block px-14 py-4 rounded-lg bg-white text-black font-semibold"
           >
             Initiate Contact
-          </a>
-        </motion.div>
+          </motion.a>
+        </div>
       </motion.section>
 
     </main>
   );
 }
 
-/* ================= UTILS ================= */
+/* ================= COMPONENTS ================= */
 
 function Divider() {
   return <div className="divider" />;
@@ -210,17 +208,23 @@ function Divider() {
 
 function Metric({ label, value }: { label: string; value: number }) {
   return (
-    <motion.div variants={item} className="surface rounded-xl p-10 depth">
+    <div className="surface rounded-xl p-10 depth">
       <div className="text-5xl font-extrabold mb-3">
         <CountUp value={value} />
         <span className="accent">+</span>
       </div>
       <p className="text-gray-400">{label}</p>
-    </motion.div>
+    </div>
   );
 }
 
 /* ================= DATA ================= */
+
+const metrics = [
+  { label: "Systems shipped", value: 32 },
+  { label: "Performance gain (%)", value: 68 },
+  { label: "Delivery speed increase (%)", value: 54 },
+];
 
 const timeline = [
   { title: "System Audit", desc: "Deep analysis of brand and constraints." },
