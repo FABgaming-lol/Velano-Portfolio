@@ -1,70 +1,84 @@
 export default function Page() {
   return (
-    <main>
+    <main className="min-h-screen">
 
       {/* HERO */}
-      <section className="section">
-        <div className="max-w-content mx-auto text-center">
+      <section className="px-6 py-32">
+        <div className="max-w-6xl mx-auto text-center">
           <h1 className="text-5xl md:text-6xl font-extrabold leading-tight">
-            Digital systems engineered
+            Digital systems,
             <br />
-            for brands that operate seriously.
+            engineered for scale.
           </h1>
 
-          <p className="mt-6 text-text-secondary max-w-2xl mx-auto">
-            Velano designs and builds high-performance web infrastructure —
-            precise, scalable, and built to last.
+          <p className="mt-8 text-gray-400 text-lg max-w-2xl mx-auto">
+            Velano designs and builds precise, scalable web systems
+            for brands that operate seriously.
           </p>
         </div>
       </section>
 
-      {/* POSITIONING */}
-      <section className="section border-t border-border-subtle">
-        <div className="max-w-content mx-auto text-center">
-          <p className="text-text-secondary">
-            Most digital products fail due to fragmentation —
-            visuals without strategy, code without structure,
+      <Divider />
+
+      {/* WHY */}
+      <section className="px-6 py-28">
+        <div className="max-w-4xl mx-auto text-center">
+          <p className="text-gray-400 text-lg leading-relaxed">
+            Most digital products fail because they are fragmented —
+            design without structure, code without intent,
             and growth without systems.
             <br /><br />
-            Velano eliminates that chaos by engineering complete digital
-            foundations from day one.
+            Velano eliminates fragmentation by engineering
+            complete digital foundations from day one.
           </p>
         </div>
       </section>
 
-      {/* SYSTEMS */}
-      <section className="section border-t border-border-subtle">
-        <div className="max-w-content mx-auto text-center">
-          <h2 className="text-3xl font-bold mb-10">Core Systems</h2>
+      <Divider />
 
-          <div className="grid gap-6 text-text-secondary">
+      {/* SYSTEMS */}
+      <section className="px-6 py-28">
+        <div className="max-w-5xl mx-auto text-center">
+          <h2 className="text-3xl font-bold mb-12">
+            What Velano Builds
+          </h2>
+
+          <div className="grid gap-6 text-gray-400 text-lg">
             <p>• Brand-driven interface architecture</p>
             <p>• Performance-first front-end systems</p>
             <p>• AI-accelerated engineering workflows</p>
-            <p>• Clean, scalable codebases built for longevity</p>
+            <p>• Clean, maintainable, scalable codebases</p>
           </div>
         </div>
       </section>
 
+      <Divider />
+
       {/* FILTER */}
-      <section className="section border-t border-border-subtle">
-        <div className="max-w-content mx-auto text-center">
-          <p className="text-text-secondary">
-            Velano does not operate on shortcuts, templates, or price pressure.
+      <section className="px-6 py-28">
+        <div className="max-w-4xl mx-auto text-center">
+          <p className="text-gray-400 text-lg">
+            Velano is not for rushed timelines, templates,
+            or cost-cutting compromises.
             <br />
-            This is for teams that value precision and long-term leverage.
+            This is for teams that value precision
+            and long-term leverage.
           </p>
         </div>
       </section>
 
+      <Divider />
+
       {/* CTA */}
-      <section className="section border-t border-border-subtle">
-        <div className="max-w-content mx-auto text-center">
-          <h2 className="text-3xl font-bold mb-6">Engage Velano</h2>
+      <section className="px-6 py-32">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-3xl font-bold mb-8">
+            Engage Velano
+          </h2>
 
           <a
             href="mailto:hello@velano.dev?subject=Project Inquiry"
-            className="inline-block px-10 py-4 rounded-lg bg-white text-black font-semibold transition-transform hover:-translate-y-1"
+            className="inline-block px-12 py-4 bg-white text-black font-semibold rounded-lg transition-transform hover:-translate-y-1"
           >
             Initiate Contact
           </a>
@@ -73,4 +87,8 @@ export default function Page() {
 
     </main>
   );
+}
+
+function Divider() {
+  return <div className="border-t border-white/10" />;
 }

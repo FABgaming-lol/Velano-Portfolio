@@ -2,58 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
-/* -------------------------
-   Base
--------------------------- */
-
+/* Base reset */
 html,
 body {
   height: 100%;
 }
 
-body {
-  background: #000;
-  color: #fff;
-}
-
-/* -------------------------
-   Typography
--------------------------- */
-
+/* Typography tuning */
 @layer base {
   body {
-    @apply antialiased leading-[1.65] tracking-[-0.01em];
+    @apply leading-relaxed tracking-[-0.01em];
   }
 
   h1 {
-    @apply leading-[1.1] tracking-[-0.02em];
+    @apply tracking-[-0.02em];
   }
 
   h2 {
-    @apply leading-[1.2] tracking-[-0.015em];
+    @apply tracking-[-0.015em];
   }
-
-  p {
-    @apply text-[1.05rem];
-  }
-}
-
-/* -------------------------
-   Layout
--------------------------- */
-
-.section {
-  @apply px-6 py-section md:py-section-md;
-}
-
-/* -------------------------
-   Tokens
--------------------------- */
-
-.text-text-secondary {
-  color: #9ca3af;
-}
-
-.border-border-subtle {
-  border-color: rgba(255, 255, 255, 0.12);
 }

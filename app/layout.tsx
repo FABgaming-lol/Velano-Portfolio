@@ -10,14 +10,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "VELANO — Digital Systems Engineering",
   description:
-    "Velano engineers high-performance digital systems for brands that value precision, authority, and scale.",
-  metadataBase: new URL("https://velano.dev"),
-  openGraph: {
-    title: "VELANO",
-    description:
-      "Technical digital systems built for brands that refuse to look small.",
-    type: "website",
-  },
+    "Velano engineers scalable, high-performance digital systems for serious brands.",
 };
 
 export default function RootLayout({
@@ -28,9 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} bg-black text-white antialiased`}>
-        <div className="relative min-h-screen overflow-x-hidden">
-          {children}
-        </div>
+        {children}
       </body>
     </html>
   );
