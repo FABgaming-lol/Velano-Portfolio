@@ -46,72 +46,81 @@ export default function Page() {
       {/* Theme Toggle */}
       <button
         onClick={toggleTheme}
-        className="fixed right-4 top-4 z-50 w-14 h-8 bg-gray-200 dark:bg-gray-700 rounded-full flex items-center p-1 transition-colors duration-300"
+        className="fixed right-4 top-4 z-50 w-14 h-8 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center p-1"
         aria-label="Toggle Theme"
       >
         <span
-          className={`w-6 h-6 bg-white dark:bg-black rounded-full transform transition-transform duration-300 ${
+          className={`w-6 h-6 rounded-full bg-white dark:bg-black transition-transform ${
             theme === "dark" ? "translate-x-6" : "translate-x-0"
           }`}
         />
       </button>
 
       {/* HERO */}
-      <section className="section reveal text-center">
-        <h1 className="text-5xl md:text-6xl font-extrabold leading-tight max-w-4xl mx-auto">
-          Digital systems built for
-          <br />
-          brands that refuse to look small.
-        </h1>
+      <section className="section reveal">
+        <div className="max-w-content mx-auto text-center">
+          <h1 className="text-5xl md:text-6xl font-extrabold">
+            Digital systems built for
+            <br />
+            brands that refuse to look small.
+          </h1>
 
-        <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto mt-6 text-lg">
-          Velano designs and engineers high-performance web experiences —
-          fast, precise, and built to scale.
-        </p>
+          <p className="mt-6 text-text-secondary-light dark:text-text-secondary-dark max-w-2xl mx-auto">
+            Velano designs and engineers high-performance web infrastructure —
+            precise, scalable, and built for long-term execution.
+          </p>
+        </div>
       </section>
 
       {/* POSITIONING */}
-      <section className="section reveal text-center">
-        <p className="max-w-3xl mx-auto text-gray-700 dark:text-gray-300 leading-relaxed">
-          Most websites fail because they are fragmented — design without strategy,
-          code without intent, and growth without structure.
-          <br /><br />
-          Velano fixes this by building complete digital infrastructure,
-          not isolated features.
-        </p>
+      <section className="section reveal">
+        <div className="max-w-content mx-auto text-center">
+          <p className="text-text-secondary-light dark:text-text-secondary-dark">
+            Most digital products fail due to fragmentation — design without
+            strategy, code without intent, and growth without structure.
+            <br /><br />
+            Velano operates differently. Systems first. Execution second.
+          </p>
+        </div>
       </section>
 
       {/* CAPABILITIES */}
-      <section className="section reveal text-center">
-        <h2 className="text-3xl font-bold mb-8">What Velano Builds</h2>
+      <section className="section reveal">
+        <div className="max-w-content mx-auto text-center">
+          <h2 className="text-3xl font-bold mb-10">Core Systems</h2>
 
-        <div className="max-w-3xl mx-auto grid gap-6 text-gray-700 dark:text-gray-300">
-          <p>• Brand-first web design with clear hierarchy</p>
-          <p>• Fast, scalable front-end systems</p>
-          <p>• AI-accelerated workflows without quality loss</p>
-          <p>• Clean architecture built for long-term growth</p>
+          <div className="grid gap-6 text-text-secondary-light dark:text-text-secondary-dark">
+            <p>• Brand-driven web architecture</p>
+            <p>• Performance-focused front-end systems</p>
+            <p>• AI-accelerated delivery pipelines</p>
+            <p>• Clean, scalable codebases</p>
+          </div>
         </div>
       </section>
 
       {/* FILTER */}
-      <section className="section reveal text-center">
-        <p className="max-w-2xl mx-auto text-gray-600 dark:text-gray-400">
-          Velano is not for people looking for cheap work or quick hacks.
-          <br />
-          It is for founders and teams who care about clarity, authority, and scale.
-        </p>
+      <section className="section reveal">
+        <div className="max-w-content mx-auto text-center">
+          <p className="text-text-secondary-light dark:text-text-secondary-dark">
+            Velano does not operate on price pressure or rushed timelines.
+            <br />
+            This is for teams that value precision and long-term leverage.
+          </p>
+        </div>
       </section>
 
       {/* CONTACT */}
-      <section id="contact" className="section reveal text-center">
-        <h2 className="text-3xl font-bold mb-6">Request Access</h2>
+      <section className="section reveal">
+        <div className="max-w-content mx-auto text-center">
+          <h2 className="text-3xl font-bold mb-6">Engage Velano</h2>
 
-        <a
-          href="mailto:hello@velano.dev?subject=Project Inquiry"
-          className="inline-block px-10 py-4 rounded-lg bg-black dark:bg-white text-white dark:text-black font-semibold transition-colors"
-        >
-          Start a Conversation
-        </a>
+          <a
+            href="mailto:hello@velano.dev?subject=Project Inquiry"
+            className="inline-block px-10 py-4 rounded-lg bg-black text-white dark:bg-white dark:text-black font-semibold"
+          >
+            Initiate Contact
+          </a>
+        </div>
       </section>
 
     </main>
