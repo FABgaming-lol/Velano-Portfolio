@@ -3,37 +3,65 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 
+/* ================= MOTION ================= */
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 40 },
+  visible: (i = 1) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: 0.12 * i,
+      duration: 0.8,
+      ease: "easeOut",
+    },
+  }),
+};
+
+function CountUp({ value }: { value: number }) {
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end center"] });
+  const rounded = useTransform(scrollYProgress, [0, 1], [0, value]);
+
+  return (
+    <motion.span ref={ref}>
+      <motion.span>
+        {rounded.to((latest) => Math.floor(latest))}
+      </motion.span>
+    </motion.span>
+  );
+}
+
+/* ================= PAGE ================= */
+
 export default function Page() {
   const { scrollYProgress } = useScroll();
 
   return (
     <main className="bg-main text-white">
 
-      {/* ================= SCROLL PROGRESS (A) ================= */}
+      {/* SCROLL PROGRESS */}
       <motion.div
         style={{ scaleX: scrollYProgress }}
         className="fixed top-0 left-0 right-0 h-[2px] bg-white origin-left z-50"
       />
 
-      {/* ================= HEADER ================= */}
+      {/* HEADER */}
       <header className="fixed top-0 left-0 right-0 z-40 backdrop-blur bg-black/40 border-b border-white/10">
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
           <span className="text-sm tracking-widest font-semibold">
             AVOLIRO<span className="accent"> / </span>VELANO
           </span>
-
-          <Magnetic>
-            <a
-              href="#contact"
-              className="text-sm px-4 py-2 border border-white/20 rounded-md"
-            >
-              Engage
-            </a>
-          </Magnetic>
+          <a
+            href="#contact"
+            className="text-sm px-4 py-2 border border-white/20 rounded-md hover:bg-white hover:text-black transition"
+          >
+            Engage
+          </a>
         </div>
       </header>
 
-      {/* ================= HERO (B) ================= */}
+      {/* HERO */}
       <section className="relative min-h-screen flex items-center px-6 pt-16 overflow-hidden">
         <div className="absolute inset-0 hero-bg opacity-40" />
 
@@ -62,21 +90,39 @@ export default function Page() {
 
       <Divider />
 
-      {/* ================= SYSTEMS ================= */}
+      {/* METRICS */}
       <section className="px-6 py-28">
-        <div className="max-w-6xl mx-auto text-center">
-          <h2 className="text-3xl font-bold mb-16">
-            What Velano Engineers
+        <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-10 text-center">
+          <Metric label="Systems shipped" value={32} />
+          <Metric label="Avg. performance gain (%)" value={68} />
+          <Metric label="Delivery speed increase (%)" value={54} />
+        </div>
+      </section>
+
+      <Divider />
+
+      {/* TIMELINE */}
+      <section className="px-6 py-28">
+        <div className="max-w-5xl mx-auto">
+          <h2 className="text-3xl font-bold text-center mb-20">
+            How Velano Operates
           </h2>
 
-          <div className="grid md:grid-cols-2 gap-8">
-            {systems.map((s) => (
-              <Magnetic key={s.title}>
-                <div className="surface rounded-xl p-8 border border-white/10 depth">
-                  <h3 className="text-xl font-semibold mb-3">{s.title}</h3>
-                  <p className="text-gray-400">{s.desc}</p>
-                </div>
-              </Magnetic>
+          <div className="space-y-16">
+            {timeline.map((t, i) => (
+              <motion.div
+                key={t.title}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={fadeUp}
+                custom={i + 1}
+                className="relative pl-10"
+              >
+                <div className="absolute left-0 top-2 w-3 h-3 rounded-full bg-white" />
+                <h3 className="text-xl font-semibold mb-3">{t.title}</h3>
+                <p className="text-gray-400">{t.desc}</p>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -84,38 +130,15 @@ export default function Page() {
 
       <Divider />
 
-      {/* ================= CASES ================= */}
-      <section className="px-6 py-28">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-16">
-            Proof of Execution
-          </h2>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {cases.map((c) => (
-              <Magnetic key={c.title}>
-                <div className="surface rounded-xl p-8 border border-white/10 depth">
-                  <span className="text-xs uppercase tracking-widest text-gray-500">
-                    {c.type}
-                  </span>
-
-                  <h3 className="mt-4 text-lg font-semibold">{c.title}</h3>
-
-                  <p className="mt-3 text-gray-400 text-sm">
-                    {c.desc}
-                  </p>
-                </div>
-              </Magnetic>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <Divider />
-
-      {/* ================= CTA ================= */}
+      {/* CTA */}
       <section id="contact" className="px-6 py-32">
-        <div className="max-w-4xl mx-auto surface rounded-2xl p-14 text-center depth">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={fadeUp}
+          className="max-w-4xl mx-auto surface rounded-2xl p-14 text-center depth"
+        >
           <h2 className="text-3xl font-bold mb-6">
             Engage Velano
           </h2>
@@ -124,15 +147,13 @@ export default function Page() {
             This is for teams that build for the long term.
           </p>
 
-          <Magnetic>
-            <a
-              href="mailto:hello@velano.dev?subject=Project Inquiry"
-              className="inline-block px-14 py-4 rounded-lg bg-white text-black font-semibold"
-            >
-              Initiate Contact
-            </a>
-          </Magnetic>
-        </div>
+          <a
+            href="mailto:hello@velano.dev?subject=Project Inquiry"
+            className="inline-block px-14 py-4 rounded-lg bg-white text-black font-semibold hover:-translate-y-1 transition-transform"
+          >
+            Initiate Contact
+          </a>
+        </motion.div>
       </section>
 
     </main>
@@ -145,69 +166,35 @@ function Divider() {
   return <div className="divider" />;
 }
 
-function Magnetic({ children }: { children: React.ReactNode }) {
-  const ref = useRef<HTMLDivElement>(null);
-
-  function onMouseMove(e: React.MouseEvent) {
-    if (!ref.current) return;
-    const rect = ref.current.getBoundingClientRect();
-    const x = e.clientX - rect.left - rect.width / 2;
-    const y = e.clientY - rect.top - rect.height / 2;
-    ref.current.style.transform = `translate(${x * 0.15}px, ${y * 0.15}px)`;
-  }
-
-  function onMouseLeave() {
-    if (!ref.current) return;
-    ref.current.style.transform = "translate(0,0)";
-  }
-
+function Metric({ label, value }: { label: string; value: number }) {
   return (
-    <div
-      ref={ref}
-      className="magnetic inline-block"
-      onMouseMove={onMouseMove}
-      onMouseLeave={onMouseLeave}
-    >
-      {children}
+    <div className="surface rounded-xl p-10 depth">
+      <div className="text-5xl font-extrabold mb-3">
+        <CountUp value={value} />
+        <span className="accent">+</span>
+      </div>
+      <p className="text-gray-400">{label}</p>
     </div>
   );
 }
 
 /* ================= DATA ================= */
 
-const systems = [
+const timeline = [
   {
-    title: "Interface Architecture",
-    desc: "Brand-driven UI systems with structure and intent.",
+    title: "System Audit",
+    desc: "Deep analysis of brand, product, and technical constraints.",
   },
   {
-    title: "Front-End Engineering",
-    desc: "Performance-first, scalable front-end systems.",
+    title: "Architecture Design",
+    desc: "Clear system structure designed for scale and longevity.",
   },
   {
-    title: "AI-Accelerated Delivery",
-    desc: "Speed without compromise using AI workflows.",
+    title: "Engineering & Iteration",
+    desc: "Rapid, AI-assisted development with constant refinement.",
   },
   {
-    title: "Scalable Codebases",
-    desc: "Clean, maintainable systems built to grow.",
-  },
-];
-
-const cases = [
-  {
-    type: "SYSTEM BUILD",
-    title: "High-conversion brand platform",
-    desc: "Engineered scalable architecture with optimized UX.",
-  },
-  {
-    type: "FRONT-END",
-    title: "Performance-critical web app",
-    desc: "Rebuilt UI systems for speed and clarity.",
-  },
-  {
-    type: "AI WORKFLOW",
-    title: "AI delivery pipeline",
-    desc: "Reduced turnaround without sacrificing quality.",
+    title: "Launch & Optimization",
+    desc: "Deployment, performance tuning, and continuous evolution.",
   },
 ];
